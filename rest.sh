@@ -14,7 +14,7 @@ cd "${HOME}/backend"
 # Installing necessary packages
 echo "Installing necessary packages..."
 sudo apt update -y
-sudo apt install -y default-jdk maven mysql-server
+sudo apt install -y default-jdk mysql-server
 
 # Cloning the Spring PetClinic repository
 echo "Cloning Spring PetClinic repository..."
