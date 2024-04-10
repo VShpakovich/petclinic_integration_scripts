@@ -8,17 +8,16 @@ DATABASE_PASSWORD=$4
 VM_PORT=$5
 
 # Creating directory for backend
-mkdir -p "${HOME}/backend"
-cd "${HOME}/backend"
+mkdir -p "home/studentadmin/backend"
+cd "home/studentadmin/backend"
 
 # Installing necessary packages
 echo "Installing necessary packages..."
 sudo apt update -y
-sudo apt install -y default-jdk mysql-server
-sudo apt-get remove openjdk-11-jdk
-sudo apt-get install openjdk-8-jdk
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-source ~/.bashrc
+sudo apt install -y mysql-server
+sudo apt install -y openjdk-11-jdk
+
+
 
 # Cloning the Spring PetClinic repository
 echo "Cloning Spring PetClinic repository..."
