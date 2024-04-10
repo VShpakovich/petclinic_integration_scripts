@@ -14,7 +14,7 @@ wget $POPULATE_DB
 
 sed -i "s/127.0.0.1/0.0.0.0/g" $CONFIG_FILE
 echo "port = $PORT" >> $CONFIG_FILE
-echo "server-id = 1" >> $CONFIG_FILE
+#echo "server-id = 2" >> $CONFIG_FILE
 echo "log_bin = /var/log/mysql/mysql-bin.log" >> $CONFIG_FILE
 
 
