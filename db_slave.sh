@@ -32,5 +32,5 @@ sudo service mysql restart
 
 sudo mysql -v -e "UNLOCK TABLES;"
 
-sudo mysql -v -e "CHANGE MASTER TO MASTER_HOST='$MASTER_ADDRESS', MASTER_PORT=$MASTER_PORT, MASTER_USER=pc, MASTER_PASSWORD=pc;"
+sudo mysql -v -e "CHANGE MASTER TO MASTER_HOST='$MASTER_ADDRESS', MASTER_PORT=$MASTER_PORT, MASTER_USER='pc', MASTER_PASSWORD='pc';"
 sudo mysql -v -e "START SLAVE;"
