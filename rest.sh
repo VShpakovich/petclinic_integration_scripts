@@ -15,6 +15,10 @@ cd "${HOME}/backend"
 echo "Installing necessary packages..."
 sudo apt update -y
 sudo apt install -y default-jdk mysql-server
+sudo apt-get remove openjdk-11-jdk
+sudo apt-get install openjdk-8-jdk
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+source ~/.bashrc
 
 # Cloning the Spring PetClinic repository
 echo "Cloning Spring PetClinic repository..."
