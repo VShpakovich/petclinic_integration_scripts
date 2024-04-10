@@ -17,9 +17,9 @@ wget $POPULATE_DB
 
 sed -i "s/127.0.0.1/0.0.0.0/g" $CONFIG_FILE
 echo "port = $PORT" >> $CONFIG_FILE
-#echo "server-id = 2" >> $CONFIG_FILE
-#echo "read_only = 1" >> $CONFIG_FILE
-sudo sed -i "s/.*server-id.*/server-id = 2/" /etc/mysql/mysql.conf.d/mysqld.cnf
+echo "server-id = 2" >> $CONFIG_FILE
+echo "read_only = 1" >> >> $CONFIG_FILE
+
 
 
 sudo mysql -e "CREATE USER IF NOT EXISTS 'pc'@'%' IDENTIFIED BY 'pc';"
