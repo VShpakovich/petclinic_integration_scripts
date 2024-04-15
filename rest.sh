@@ -28,14 +28,14 @@ cd spring-petclinic-rest
 
 # Modifying application.properties to use MySQL instead of HSQLDB
 echo "Configuring application.properties..."
-sed -i -n "s/=hsqldb/=mysql/g" ${APP_PROP}
-sed -i -n "s/9966/${VM_PORT}/g" ${APP_PROP}
+sed -i "s/=hsqldb/=mysql/g" ${APP_PROP}
+sed -i "s/9966/${VM_PORT}/g" ${APP_PROP}
 
-sed -i -n "s/jdbc:hsqldb/jdbc:mysql/g" ${MYSQL_PROP}
-sed -i -n "s/localhost/${DATABASE_IP}/g" ${MYSQL_PROP}
-sed -i -n "s/3306/${DATABASE_PORT}/g" ${MYSQL_PROP}
-sed -i -n "s/pc/${DATABASE_USER}/g" ${MYSQL_PROP}
-sed -i -n "s/pc/${DATABASE_PASSWORD}/g" ${MYSQL_PROP}
+sed -i "s/jdbc:hsqldb/jdbc:mysql/g" ${MYSQL_PROP}
+sed -i "s/localhost/${DATABASE_IP}/g" ${MYSQL_PROP}
+sed -i "s/3306/${DATABASE_PORT}/g" ${MYSQL_PROP}
+sed -i "s/pc/${DATABASE_USER}/g" ${MYSQL_PROP}
+sed -i "s/pc/${DATABASE_PASSWORD}/g" ${MYSQL_PROP}
 
 # Building and running the Spring Boot application
 echo "Building and running the Spring Boot application..."
