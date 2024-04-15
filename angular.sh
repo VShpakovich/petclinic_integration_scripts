@@ -10,19 +10,16 @@ echo "Installing necessary packages..."
 sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove -y
-sudo apt install -y curl npm nginx
+sudo apt install -y curl
 
 cd ~/
 
 # Install package manager for Node.js (nvm)
-echo "Installing nvm..."
-curl -fsSL https://deb.nodesource.com/setup_18.x  | sudo -E bash -
-sudo apt-get install -y nodejs
-
-
-# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-# nvm install v18.13.0
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm install v18.13.0
 
 # Cloning the Spring PetClinic repository
 git clone https://github.com/spring-petclinic/spring-petclinic-angular.git
@@ -34,7 +31,6 @@ sed -i "s/8080/${BACKEND_PORT}/g" src/environments/environment.ts src/environmen
 
 # Building and running the Angular application
 echo "Building and running the Angular application..."
-cd ~
 echo N | npm install -g @angular/cli@latest
 echo N | npm install
 echo N | ng analytics off
