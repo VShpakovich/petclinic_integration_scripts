@@ -38,7 +38,7 @@ echo N | npm install
 echo N | ng analytics off
 
 npm install angular-http-server
-npm run build -- --prod
+npm run build --prod
 
 # Start server
 npx angular-http-server --path ./dist -p $VM_PORT &
