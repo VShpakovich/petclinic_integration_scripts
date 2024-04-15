@@ -27,7 +27,7 @@ cd spring-petclinic-angular
 
 # Modifying environment.prod.ts to use the backend IP and port
 sed -i "s/localhost/${BACKEND_IP}/g" src/environments/environment.ts src/environments/environment.prod.ts
-sed -i "s/8080/${BACKEND_PORT}/g" src/environments/environment.ts src/environments/environment.prod.ts
+sed -i "s/9966/${BACKEND_PORT}/g" src/environments/environment.ts src/environments/environment.prod.ts
 
 # Building and running the Angular application
 echo "Building and running the Angular application..."
