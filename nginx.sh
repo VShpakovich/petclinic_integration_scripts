@@ -6,10 +6,10 @@ if [ "$#" -ne 5 ]; then
 fi
 
 NGINX_PORT=$1
-READ_SERVER_ADDRESS=$2
-READ_SERVER_PORT=$3
-WRITE_SERVER_ADDRESS=$4
-WRITE_SERVER_PORT=$5
+WRITE_SERVER_ADDRESS=$2
+WRITE_SERVER_PORT=$3
+READ_SERVER_ADDRESS=$4
+READ_SERVER_PORT=$5
 
 NGINX_CONFIG="https://github.com/VShpakovich/petclinic_integration_scripts/blob/main/nginx.conf"
 
