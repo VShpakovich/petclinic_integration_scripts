@@ -5,14 +5,19 @@ BACKEND_IP=$1
 BACKEND_PORT=$2
 VM_PORT=$3
 
+# Creating directory for frontend
+mkdir -p "${HOME}/frontend"
+cd "${HOME}/frontend"
+
+ENV="src/environments/environment.ts"
+ENV_PROD="src/environments/environment.prod.ts"
+
 # Installing necessary packages
 echo "Installing necessary packages..."
 sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove -y
 sudo apt install -y curl
-
-cd ~/
 
 # Install package manager for Node.js (nvm)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
@@ -26,8 +31,8 @@ git clone https://github.com/spring-petclinic/spring-petclinic-angular.git
 cd spring-petclinic-angular
 
 # Modifying environment.prod.ts to use the backend IP and port
-sed -i "s/localhost/${BACKEND_IP}/g" src/environments/environment.ts src/environments/environment.prod.ts
-sed -i "s/9966/${BACKEND_PORT}/g" src/environments/environment.ts src/environments/environment.prod.ts
+sed -i "s/localhost/${BACKEND_IP}/g" ${ENV} ${ENV_PROD}
+sed -i "s/9966/${BACKEND_PORT}/g" ${ENV} ${ENV_PROD}
 
 # Building and running the Angular application
 echo "Building and running the Angular application..."
