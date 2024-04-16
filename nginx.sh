@@ -11,7 +11,7 @@ READ_SERVER_PORT=$3
 WRITE_SERVER_ADDRESS=$4
 WRITE_SERVER_PORT=$5
 
-NGINX_CONFIG="https://raw.githubusercontent.com/bartlomiejkrawczyk/WUS-22Z/master/lab_1/scripts/nginx/nginx.conf"
+NGINX_CONFIG="https://github.com/VShpakovich/petclinic_integration_scripts/blob/main/nginx.conf"
 
 # Instalation
 sudo apt-get update
