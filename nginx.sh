@@ -1,38 +1,43 @@
 #!/bin/bash
 
-if [ "$#" -ne 5 ]; then
-    echo "Usage: $0 NGINX_PORT READ_SERVER_ADDRESS READ_SERVER_PORT WRITE_SERVER_ADDRESS WRITE_SERVER_PORT" >&2
-    exit 1
-fi
+BALANCER_PORT=$1
+BACKEND_WRITE_ADDRESS=$2
+BACKEND_WRITE_PORT=$3
+BACKEND_READ_ADDRESS=$4
+BACKEND_READ_PORT=$5
 
-NGINX_PORT=$1
-WRITE_SERVER_ADDRESS=$2
-WRITE_SERVER_PORT=$3
-READ_SERVER_ADDRESS=$4
-READ_SERVER_PORT=$5
-
-NGINX_CONFIG="https://github.com/VShpakovich/petclinic_integration_scripts/blob/main/nginx.conf"
-
-# Instalation
 sudo apt-get update
 sudo apt-get upgrade -y
+sudo apt install -y nginx
 
-sudo apt install nginx -y
-sudo apt install wget -y
+cd ~/
 
-# Download configuration
-wget $NGINX_CONFIG
+cat > loadbalancerfilter.conf << EOL
+server {
+  listen      $BALANCER_PORT;
+  location /petclinic/api {
+    if (\$request_method = POST ) {
+      proxy_pass http://$BACKEND_WRITE_ADDRESS:$BACKEND_WRITE_PORT;
+    }
 
-# Update configuration
-sed -i "s/NGINX_PORT/$NGINX_PORT/g" ./nginx.conf
-sed -i "s/READ_SERVER_ADDRESS/$READ_SERVER_ADDRESS/g" ./nginx.conf
-sed -i "s/READ_SERVER_PORT/$READ_SERVER_PORT/g" ./nginx.conf
-sed -i "s/WRITE_SERVER_ADDRESS/$WRITE_SERVER_ADDRESS/g" ./nginx.conf
-sed -i "s/WRITE_SERVER_PORT/$WRITE_SERVER_PORT/g" ./nginx.conf
+    if (\$request_method = PUT) {
+      proxy_pass http://$BACKEND_WRITE_ADDRESS:$BACKEND_WRITE_PORT;
+    }
 
-sudo cp ./nginx.conf /etc/nginx/conf.d/lb.conf
+    if (\$request_method = DELETE) {
+      proxy_pass http://$BACKEND_WRITE_ADDRESS:$BACKEND_WRITE_PORT;
+    }
+    if (\$request_method = OPTIONS) {
+      proxy_pass http://$BACKEND_WRITE_ADDRESS:$BACKEND_WRITE_PORT;
+    }
 
-# Restart service
-sudo systemctl restart nginx.service
+    if (\$request_method = GET ) {
+       proxy_pass http://$BACKEND_READ_ADDRESS:$BACKEND_READ_PORT;
+    }
+  }
+}
+EOL
 
-echo DONE
+sudo mv loadbalancerfilter.conf /etc/nginx/conf.d/loadbalancerfilter.conf
+
+sudo nginx -s reload
