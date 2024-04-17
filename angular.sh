@@ -5,31 +5,34 @@ BACKEND_IP=$1
 BACKEND_PORT=$2
 VM_PORT=$3
 
+# Creating directory for frontend
+mkdir -p "${HOME}/frontend"
+cd "${HOME}/frontend"
+
+ENV="src/environments/environment.ts"
+ENV_PROD="src/environments/environment.prod.ts"
+
 # Installing necessary packages
 echo "Installing necessary packages..."
 sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove -y
-sudo apt install -y curl npm nginx
-
-cd ~/
+sudo apt install -y curl
 
 # Install package manager for Node.js (nvm)
-echo "Installing nvm..."
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-nvm install 14.11.1
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm install v18.13.0
 
 # Cloning the Spring PetClinic repository
 git clone https://github.com/spring-petclinic/spring-petclinic-angular.git
-npm install --save-dev @angular/cli@latest
 cd spring-petclinic-angular
 
 # Modifying environment.prod.ts to use the backend IP and port
-sed -i "s/localhost/${BACKEND_IP}/g" src/environments/environment.ts src/environments/environment.prod.ts
-sed -i "s/8080/${BACKEND_PORT}/g" src/environments/environment.ts src/environments/environment.prod.ts
+sed -i "s/localhost/${BACKEND_IP}/g" ${ENV} ${ENV_PROD}
+sed -i "s/9966/${BACKEND_PORT}/g" ${ENV} ${ENV_PROD}
 
 # Building and running the Angular application
 echo "Building and running the Angular application..."
