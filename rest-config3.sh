@@ -27,14 +27,12 @@ git clone https://github.com/spring-petclinic/spring-petclinic-rest.git
 cd spring-petclinic-rest
 
 # Update configuration
-ORIGINAL="jdbc:hsqldb://localhost:3306/petclinic?useUnicode=true"
-REPLACEMENT="jdbc:mysql:replication://$DATABASE_MASTER_ADDRESS:$DATABASE_MASTER_PORT,$DATABASE_SLAVE_ADDRESS:$DATABASE_SLAVE_PORT/petclinic?useUnicode=true&allowSourceDownConnections=true"
-
 sed -i "s/=hsqldb/=mysql/g" ${APP_PROP}
 sed -i "s/9966/${VM_PORT}/g" ${APP_PROP}
-jdbc:mysql:
 
-sed -i "s/$ORIGINAL/$REPLACEMENT/g" ${MYSQL_PROP}
+sed -i "s/jdbc:hsqldb:/jdbc:mysql:replication:/g" ${MYSQL_PROP}
+sed -i "s/localhost:3306/$DATABASE_MASTER_ADDRESS:$DATABASE_MASTER_PORT,$DATABASE_SLAVE_ADDRESS:$DATABASE_SLAVE_PORT/g" ${MYSQL_PROP}
+sed -i "s/petclinic?useUnicode=true/petclinic?useUnicode=true&allowSourceDownConnections=true/g" ${MYSQL_PROP}
 sed -i "s/username=pc/username=${DATABASE_USER}/g" ${MYSQL_PROP}
 sed -i "s/password=petclinic/password=${DATABASE_PASSWORD}/g" ${MYSQL_PROP}
 
