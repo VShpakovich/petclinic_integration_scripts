@@ -18,9 +18,11 @@ echo "server-id = 1" >> $CONFIG_FILE
 echo "log_bin = /var/log/mysql/mysql-bin.log" >> $CONFIG_FILE
 
 
-
 sudo mysql -e "CREATE USER IF NOT EXISTS 'pc'@'%' IDENTIFIED BY 'pc';"
-sed -i "s/GRANT ALL PRIVILEGES ON petclinic.* TO pc@localhost IDENTIFIED BY 'pc';/GRANT ALL PRIVILEGES ON petclinic.* TO 'pc'@'%' WITH GRANT OPTION;/g" initDB.sql
+sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'pc'@'%' WITH GRANT OPTION;"
+sudo mysql -e "GRANT REPLICATION SLAVE ON *.* TO 'pc'@'%';"
+sudo mysql -e "FLUSH PRIVILEGES;"
+
 cat initDB.sql | sudo mysql -f
 
 sed -i '1 i\USE petclinic;' populateDB.sql
